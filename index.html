@@ -23,45 +23,32 @@
             messageContainer.appendChild(messageElement);
         }
 
-        // Example: Listen for WebSocket messages (you can modify this)
-        const socket = new WebSocket("wss://yourwebsite.com/socket");
+        // Establish a WebSocket connection
+        const socket = new WebSocket("wss://deepak2516.github.io/basic/");
+
+        // Listen for incoming messages
         socket.onmessage = function (event) {
             const message = event.data;
             addMessage(message);
         };
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Receiver</title>
-    <style>
-        /* Add your CSS styles here */
-    </style>
-</head>
-<body>
-    <h1>Received Messages:</h1>
-    <div id="message-container">
-        <!-- Messages will be displayed here dynamically -->
-    </div>
 
-    <script>
-        // JavaScript code to update messages dynamically
-        function addMessage(message) {
-            const messageContainer = document.getElementById("message-container");
-            const messageElement = document.createElement("p");
-            messageElement.textContent = message;
-            messageContainer.appendChild(messageElement);
-        }
+        // Handle connection open event
+        socket.onopen = function (event) {
+            console.log("WebSocket connection opened.");
+        };
 
-        // Example: Listen for WebSocket messages (you can modify this)
-        const socket = new WebSocket("wss://yourwebsite.com/socket");
-        socket.onmessage = function (event) {
-            const message = event.data;
-            addMessage(message);
+        // Handle connection close event
+        socket.onclose = function (event) {
+            if (event.wasClean) {
+                console.log(`WebSocket connection closed cleanly, code=${event.code}, reason=${event.reason}`);
+            } else {
+                console.error("WebSocket connection died");
+            }
+        };
+
+        // Handle connection error event
+        socket.onerror = function (error) {
+            console.error(`WebSocket error: ${error}`);
         };
     </script>
 </body>
